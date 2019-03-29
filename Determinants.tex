@@ -1,0 +1,206 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{centernot}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{eufrak}
+\usepackage{blindtext}
+\graphicspath{{pics/}}
+
+\usetheme{Warsaw}
+
+\title{Determinants}
+\subtitle{Group 12}
+
+\author{Catterwell, A. \quad Smith, M. \quad Wang, R. \quad Watson, K.}
+
+\institute{University of Edinburgh}
+
+\begin{document}
+
+\begin{frame}
+    \maketitle
+\end{frame}
+
+\begin{frame}{Overview}
+    \tableofcontents
+\end{frame}
+
+\section{Using LU decomposition to compute determinants}
+
+\subsection{What is LU decomposition?}
+
+\begin{frame}{What is LU decomposition?}
+
+    Somebody else do this section
+
+    \begin{itemize}
+        \item What LU decomposition is
+        \item Its limitations
+        \item How PLU decomposition addresses these limitations
+    \end{itemize}
+
+\end{frame}
+
+\subsection{How it helps us compute determinants}
+
+\begin{frame}{How it helps us compute determinants}
+
+    some maths.
+
+\end{frame}
+
+\section{Other algorithms for computing determinants}
+
+\subsection{Laplace Expansion}
+
+\begin{frame}{Laplace Expansion}
+    The Laplace (1st row) expansion for computing determinants is usually the first method taught for
+    computing determinants of $3 \times 3$ matrices and larger.
+
+    \begin{block}{Theorem}
+        The formula for the (1st row) Laplace expansion of $A \in \mathrm{Mat}(n, \mathbb{R})$ is given as:
+        \[
+            |A| = \sum_{j=1}^n a_{1j}\cdot C_{1j}
+        \]
+        where $C_{ij}$ is the $(i, j)$ cofactor of $A$.
+    \end{block}
+
+    Its runtime complexity of $\mathcal{O}(N!)$ is poor.
+
+\end{frame}
+
+\subsection{Leibniz Formula}
+
+\begin{frame}{Leibniz Formula}
+    \begin{block}{Definition}
+        The Leibniz formula defines the determinant of an $n \times n$ matrix $A$ as follows:
+        \[
+            |A| = \sum_{\sigma \in \mathfrak{S}_n} \mathrm{sgn}(\sigma) \product_{i=1}^n a_{i \sigma(i)}
+        \]
+        where $\mathfrak{S}_n$ is the set of permutations length $n$.
+    \end{block}
+
+    Computing the determinant using this method is slow with runtime $\mathcal{O}((N+1)!)$
+\end{frame}
+
+\subsection{Gaussian Elimination}
+
+\begin{frame}{Gaussian Elimination}
+
+    \begin{itemize}
+
+        \item The determinant of a triangular matrix can be computed by taking the product of its
+            diagonal entries (which is a quick $\mathcal{O}(N)$ operation).
+
+        \item Any invertible square matrix can be transformed into echelon form by performing
+            Gaussian elimination, which has runtime $\mathcal{O}(N^3)$.
+
+    \end{itemize}
+    Conventional Gaussian elimination requires division, meaning that solutions maybe inexact,
+    so precision is lost.
+
+    This is addressed by...
+
+\end{frame}
+
+\subsection{Bareiss Algorithm}
+
+\begin{frame}{Bareiss Algorithm}
+
+    \begin{itemize}
+
+        \item Addresses the issue of precision-loss by performing \emph{integer-preserving}
+            Gaussian elimination on integer matrices.
+
+        \item The runtime complexity is $\mathcal{O}(N^3)$ which is the same as conventional
+            Gaussian Elimination, whilst preserving exactness.
+
+        \item To be continued.
+
+    \end{itemize}
+
+\end{frame}
+
+\subsection{Bird's Algorithm}
+
+\begin{frame}{Bird's Algorithm}
+    Define $\mu : \mathrm{Mat}(n, \mathbb{R}) \to \mathrm{Mat}(n, \mathbb{R})$:
+    \[
+        \mu(X) =
+        \begin{bmatrix}{}
+            \mu_{2,2} - x_{2,2} & x_{1,2}             & \ldots & x_{1,n-1}           & x_{1,n} \\
+            0                   & \mu_{3,3} - x_{3,3} & \ldots & x_{2,n-1}           & x_{2,n} \\
+            \vdots              & \vdots              & \ddots & \vdots              & \vdots \\
+            0                   & 0                   & \ldots & \mu_{n,n} - x_{n,n} & x_{n-1,n} \\
+            0                   & 0                   & \ldots & 0                   & 0
+        \end{bmatrix}
+    \]
+    and $F_A : \mathrm{Mat}(n, \mathbb{R}) \to \mathrm{Mat}(n, \mathbb{R})$, with $A \in \mathrm{Mat}(n, \mathbb{R})$
+    \begin{align*}{}
+        F_A(X)    & = \mu(X)\cdot A \\
+        F_A^2(X)  & = \mu(F_A(X)) \cdot A \\
+                  & \vdots \\
+        F_A^n(X)  & = \mu(F_A^{n-1}(X)) \cdot A \\
+    \end{align*}
+
+\end{frame}
+
+\begin{frame}{Bird's Algorithm (cont.)}
+
+    \begin{block}{Bird's Theorem}
+        \[
+            F_A^{n-1}(A) = 
+            \begin{bmatrix}{}
+                d      & 0      & \ldots & 0 \\
+                0      & 0      & \ldots & 0 \\
+                \vdots & \vdots & \ddots & \vdots \\
+                0      & 0      & 0      & 0
+            \end{bmatrix}
+            \text{with} \ d = 
+            \begin{cases}{}
+                |A|  & \text{odd} \ n \\
+                -|A| & \text{even} \ n \\
+            \end{cases}
+        \]
+    \end{block}
+    
+    \begin{itemize}
+
+        \item Enables the \emph{division-free} computation of determinants in $\mathcal{O}(n\cdot M(n))$
+            where $M(n)$ is the runtime complexity of the matrix multiplication algorithm used.
+
+        \item Given a good matrix multiplication algorithm with runtime $\mathcal{O}(n^{2.376})$ 
+            (\emph{Coppersmith-Winograd}),
+            this algorithm runs in $\mathcal{O}(n^{3.376})$.
+
+    \end{itemize}
+
+\end{frame}
+
+\section{Summary}
+
+\subsection{A comparison of the determinant algorithms}
+
+\begin{frame}{A comparison of the determinant algorithms}
+    \begin{tabular}{l l l}
+        \toprule
+        \emph{Algorithm}     & \emph{Runtime}           & \emph{Exact} \\
+        \midrule
+        Laplace Expansion    & $\mathcal{O}(N!)$        & Yes \\
+        Leibniz Formula      & $\mathcal{O}((N+1)!)$    & Yes \\
+        LU Decomposition     & $\mathcal{O}(N^3)$       & No \\
+        Gaussian Elimination & $\mathcal{O}(N^3)$       & No \\
+        Bareiss' Algorithm   & $\mathcal{O}(N^3)$       & Yes \\
+        Bird's Algorithm     & $\mathcal{O}(N^{3.376})$ & Yes \\
+        \bottomrule
+    \end{tabular}
+
+\end{frame}
+
+\end{document}
