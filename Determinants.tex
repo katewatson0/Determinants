@@ -6,7 +6,6 @@
 \usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{centernot}
-\usepackage{multicol}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{eufrak}
@@ -216,9 +215,11 @@
             $\mathcal{O}(n\cdot M(n))$ where $M(n)$ is the runtime complexity of the matrix
             multiplication algorithm used.
 
-        \item Given a good matrix multiplication algorithm with runtime $\mathcal{O}(n^{2.376})$
-            (\emph{Coppersmith-Winograd}),
-            this algorithm runs in $\mathcal{O}(n^{3.376})$.
+        \item If the conventional $\mathcal{O}(n^3)$ matrix multiplication algorithm is used,
+            then Bird's algorithm will run in $\mathcal{O}(n^4)$ time.
+
+        \item But this can be reduced to $\mathcal{O}(n^{3.8})$ by using the
+            \emph{Strassen algorithm} for matrix multiplication.
 
     \end{itemize}
 
@@ -248,7 +249,7 @@
             LU decomposition     & $\mathcal{O}(N^3)$       & No \\
             Gaussian elimination & $\mathcal{O}(N^3)$       & No \\
             Bareiss' algorithm   & $\mathcal{O}(N^3)$       & Yes \\
-            Bird's algorithm     & $\mathcal{O}(N^{3.376})$ & Yes \\
+            Bird's algorithm     & $\mathcal{O}(N^{3.8})$ & Yes \\
             \bottomrule
         \end{tabular}
     \end{center}
