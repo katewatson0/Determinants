@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{centernot}
+\usepackage{multicol}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{eufrak}
@@ -39,6 +40,7 @@
 
 \begin{frame}{What is LU decomposition?}
 
+    % TODO
     Somebody else do this section
 
     \begin{itemize}
@@ -53,20 +55,37 @@
 
 \begin{frame}{How it helps us compute determinants}
 
+    % TODO
     some maths.
 
 \end{frame}
 
 \section{Other algorithms for computing determinants}
 
-\subsection{Laplace Expansion}
+\subsection{Leibniz formula}
 
-\begin{frame}{Laplace Expansion}
-    The Laplace (1st row) expansion for computing determinants is usually the first method taught for
-    computing determinants of $3 \times 3$ matrices and larger.
+\begin{frame}{Leibniz formula}
+    \begin{block}{Definition}
+        The Leibniz formula defines the determinant of an $n \times n$ matrix $A$ as
+        \[
+            |A| = \sum_{\sigma \in \mathfrak{S}_n} \mathrm{sgn}(\sigma)
+            \product_{i=1}^n a_{i \sigma(i)}
+        \]
+        where $\mathfrak{S}_n$ is the set of permutations length $n$.
+    \end{block}
+
+    Computing the determinant using this method is slow with runtime $\mathcal{O}((N+1)!)$.
+\end{frame}
+
+\subsection{Laplace expansion}
+
+\begin{frame}{Laplace expansion}
+    The Laplace (1st row) expansion for computing determinants is usually the first method taught
+    for computing determinants of $3 \times 3$ matrices and larger.
 
     \begin{block}{Theorem}
-        The formula for the (1st row) Laplace expansion of $A \in \mathrm{Mat}(n, \mathbb{R})$ is given as:
+        The formula for the (1st row) Laplace expansion of $A \in \mathrm{Mat}(n, \mathbb{R})$
+        is given as:
         \[
             |A| = \sum_{j=1}^n a_{1j}\cdot C_{1j}
         \]
@@ -77,23 +96,26 @@
 
 \end{frame}
 
-\subsection{Leibniz Formula}
+\begin{frame}{Laplace expansion vs Leibniz formula}
+    \begin{center}{}
+        \includegraphics[height=180]{leibniz-laplace}
+    \end{center}
 
-\begin{frame}{Leibniz Formula}
-    \begin{block}{Definition}
-        The Leibniz formula defines the determinant of an $n \times n$ matrix $A$ as follows:
-        \[
-            |A| = \sum_{\sigma \in \mathfrak{S}_n} \mathrm{sgn}(\sigma) \product_{i=1}^n a_{i \sigma(i)}
-        \]
-        where $\mathfrak{S}_n$ is the set of permutations length $n$.
-    \end{block}
-
-    Computing the determinant using this method is slow with runtime $\mathcal{O}((N+1)!)$.
+    Runtimes are similar --- both run in exponential time.
 \end{frame}
 
-\subsection{Gaussian Elimination}
+\begin{frame}{Laplace expansion vs LU decomposition}
+    \begin{center}{}
+        \includegraphics[height=180]{laplace-lu}
+    \end{center}
+    
+    The difference between exponential and polynomial-time functions is clear.
+    % Let's look at a better algorithm.
+\end{frame}
 
-\begin{frame}{Gaussian Elimination}
+\subsection{Gaussian elimination}
+
+\begin{frame}{Gaussian elimination}
 
     \begin{itemize}
 
@@ -101,19 +123,32 @@
             diagonal entries (which is a quick $\mathcal{O}(N)$ operation).
 
         \item Any invertible square matrix can be transformed into echelon form by performing
-            Gaussian elimination, which has runtime $\mathcal{O}(N^3)$.
+            Gaussian elimination, which takes $\mathcal{O}(N^3)$ time.
 
     \end{itemize}
+
+    So how does it compare to LU decomposition?
+
+\end{frame}
+
+\begin{frame}{Gaussian elimination vs LU decomposition}
+    \begin{center}{}
+        \includegraphics[height=180]{lu-gauss}
+    \end{center}
+
+    The difference in runtimes is small (a constant factor).
+\end{frame}
+
+\begin{frame}{Gaussian elimination (cont.)}
     Conventional Gaussian elimination requires division, meaning that solutions maybe inexact,
     so precision is lost.
 
     This is addressed by\dots
-
 \end{frame}
 
-\subsection{Bareiss Algorithm}
+\subsection{Bareiss algorithm}
 
-\begin{frame}{Bareiss Algorithm}
+\begin{frame}{Bareiss algorithm}
 
     \begin{itemize}
 
@@ -123,15 +158,17 @@
         \item The runtime complexity is $\mathcal{O}(N^3)$ which is the same as conventional
             Gaussian Elimination, whilst preserving exactness.
 
-        \item To be continued.
+        % TODO
 
     \end{itemize}
 
+    % This is very complicated.  Are there any easier exact algorithms that run in polynomial time?
+
 \end{frame}
 
-\subsection{Bird's Algorithm}
+\subsection{Bird's algorithm}
 
-\begin{frame}{Bird's Algorithm}
+\begin{frame}{Bird's algorithm}
     Define $\mu : \mathrm{Mat}(n, \mathbb{R}) \to \mathrm{Mat}(n, \mathbb{R})$:
     \[
         \mu(X) =
@@ -143,7 +180,8 @@
             0                   & 0                   & \cdots & 0                   & 0
         \end{bmatrix}
     \]
-    and $F_A : \mathrm{Mat}(n, \mathbb{R}) \to \mathrm{Mat}(n, \mathbb{R})$, with $A \in \mathrm{Mat}(n, \mathbb{R})$
+    and $F_A : \mathrm{Mat}(n, \mathbb{R}) \to \mathrm{Mat}(n, \mathbb{R})$,
+    with $A \in \mathrm{Mat}(n, \mathbb{R})$
     \begin{align*}{}
         F_A(X)    & = \mu(X)\cdot A \\
         F_A^2(X)  & = \mu(F_A(X)) \cdot A \\
@@ -153,7 +191,7 @@
 
 \end{frame}
 
-\begin{frame}{Bird's Algorithm (cont.)}
+\begin{frame}{Bird's algorithm (cont.)}
 
     \begin{block}{Bird's Theorem}
         \[
@@ -174,8 +212,9 @@
 
     \begin{itemize}
 
-        \item Enables the \emph{division-free} computation of determinants in $\mathcal{O}(n\cdot M(n))$
-            where $M(n)$ is the runtime complexity of the matrix multiplication algorithm used.
+        \item Enables the \emph{division-free} computation of determinants in
+            $\mathcal{O}(n\cdot M(n))$ where $M(n)$ is the runtime complexity of the matrix
+            multiplication algorithm used.
 
         \item Given a good matrix multiplication algorithm with runtime $\mathcal{O}(n^{2.376})$
             (\emph{Coppersmith-Winograd}),
@@ -185,17 +224,26 @@
 
 \end{frame}
 
-\section{Summary}
+\begin{frame}{Bird's algorithm vs LU decomposition}
+    \begin{center}{}
+        \includegraphics[height=180]{bird-lu}
+    \end{center}
 
-\subsection{A comparison of the determinant algorithms}
+    Bird's runtimes increase noticeable more rapidly than LU decomposition,
+    but it's still polynomial.
+\end{frame}
 
-\begin{frame}{A comparison of the determinant algorithms}
+\section{Epilogue}
+
+\subsection{Summary of determinant algorithms}
+
+\begin{frame}{Summary of determinant algorithms}
     \begin{tabular}{l l l}
         \toprule
         \emph{Algorithm}     & \emph{Runtime}           & \emph{Exact} \\
         \midrule
-        Laplace Expansion    & $\mathcal{O}(N!)$        & Yes \\
         Leibniz Formula      & $\mathcal{O}((N+1)!)$    & Yes \\
+        Laplace Expansion    & $\mathcal{O}(N!)$        & Yes \\
         LU Decomposition     & $\mathcal{O}(N^3)$       & No \\
         Gaussian Elimination & $\mathcal{O}(N^3)$       & No \\
         Bareiss' Algorithm   & $\mathcal{O}(N^3)$       & Yes \\
@@ -203,6 +251,20 @@
         \bottomrule
     \end{tabular}
 
+\end{frame}
+
+\begin{frame}{How fast is Maple's built-in determinant function?}
+    \begin{center}{}
+        \includegraphics[height=180]{gauss-maple}
+    \end{center}
+    
+    Maple's optimisation means a fair comparison cannot be made.
+\end{frame}
+
+\begin{frame}{}
+    \begin{center}{}
+        \Huge{Thanks!}
+    \end{center}
 \end{frame}
 
 \end{document}
