@@ -64,6 +64,7 @@
 \subsection{Leibniz formula}
 
 \begin{frame}{Leibniz formula}
+
     \begin{block}{Definition}
         The Leibniz formula defines the determinant of $A \in \mathbb{M}(n)$ as
         \[
@@ -74,11 +75,13 @@
     \end{block}
 
     Computing the determinant using this method is slow with runtime $\mathcal{O}((N+1)!)$.
+
 \end{frame}
 
 \subsection{Laplace expansion}
 
 \begin{frame}{Laplace expansion}
+
     The Laplace (1st row) expansion for computing determinants is usually the first method taught
     for computing determinants of $3 \times 3$ matrices and larger.
 
@@ -96,14 +99,17 @@
 \end{frame}
 
 \begin{frame}{Laplace expansion vs Leibniz formula}
+
     \begin{center}{}
         \includegraphics[height=180]{leibniz-laplace}
     \end{center}
 
     Runtimes are similar --- both run in exponential time.
+
 \end{frame}
 
 \begin{frame}{Laplace expansion vs LU decomposition}
+
     \begin{center}{}
         \includegraphics[height=180]{laplace-lu}
     \end{center}
@@ -131,6 +137,7 @@
 \end{frame}
 
 \begin{frame}{Gaussian elimination vs LU decomposition}
+
     \begin{center}{}
         \includegraphics[height=180]{lu-gauss}
     \end{center}
@@ -139,10 +146,12 @@
 \end{frame}
 
 \begin{frame}{Gaussian elimination (cont.)}
+
     Conventional Gaussian elimination requires division, meaning that solutions maybe inexact,
     so precision is lost.
 
     This is addressed by\dots
+
 \end{frame}
 
 \subsection{Bareiss algorithm}
@@ -168,6 +177,7 @@
 \subsection{Bird's algorithm}
 
 \begin{frame}{Bird's algorithm}
+
     Define $\mu : \mathbb{M}(n) \to \mathbb{M}(n)$:
     \[
         \mu(X) =
@@ -226,12 +236,14 @@
 \end{frame}
 
 \begin{frame}{Bird's algorithm vs LU decomposition}
+
     \begin{center}{}
         \includegraphics[height=180]{bird-lu}
     \end{center}
 
     Bird's runtimes increase noticeable more rapidly than LU decomposition,
     but it's still polynomial.
+
 \end{frame}
 
 \section{Epilogue}
@@ -239,7 +251,8 @@
 \subsection{Summary of determinant algorithms}
 
 \begin{frame}{Summary of determinant algorithms}
-    \begin{center}{}
+
+    \begin{center}
         \begin{tabular}{l l l}
             \toprule
             \emph{Algorithm}     & \emph{Runtime}           & \emph{Exact} \\
@@ -248,8 +261,8 @@
             Laplace expansion    & $\mathcal{O}(N!)$        & Yes \\
             LU decomposition     & $\mathcal{O}(N^3)$       & No \\
             Gaussian elimination & $\mathcal{O}(N^3)$       & No \\
-            Bareiss' algorithm   & $\mathcal{O}(N^3)$       & Yes \\
-            Bird's algorithm     & $\mathcal{O}(N^{3.8})$ & Yes \\
+            Bareiss algorithm    & $\mathcal{O}(N^3)$       & Yes \\
+            Bird's algorithm     & $\mathcal{O}(N^{3.8})$   & Yes \\
             \bottomrule
         \end{tabular}
     \end{center}
@@ -259,6 +272,7 @@
 \subsection{How fast is Maple's implementation?}
 
 \begin{frame}{How fast is Maple's built-in determinant function?}
+
     \begin{center}{}
         \includegraphics[height=180]{gauss-maple}
     \end{center}
@@ -267,10 +281,12 @@
 
 \end{frame}
 
-\begin{frame}{}
-    \begin{center}{}
+\begin{frame}
+
+    \begin{center}
         \Huge{Thanks!}
     \end{center}
+
 \end{frame}
 
 \end{document}
