@@ -53,9 +53,31 @@
 \subsection{How it helps us compute determinants}
 
 \begin{frame}{How it helps us compute determinants}
+We first start with PA=LU. We will now explain how to compute the determinant of a martix A using the PLU decomposition.
+    \begin{align}
+    $$A &= P^(-1)LU \\
+        &= P^T LU \\ $$
+    \end{align}
+    
+    $P^(-1) = P^T$ by definition an orthogonal matrix.
+    Now we have A in a form where we can easily caluclate the determinant.
+    
+    \begin{align}
+    $$det(A) &= det(P^T)det(L)det(U) \\
+             &= det(P)det(L)det(U) \\ $$
+    \end{align}
+    We can make this step as from algebra we know $\text{det}(AB) = \text{det}(A)\text{det}(B)$ and also that $\text{det}(A) = \text{det}(A^T)$.
 
-    % TODO
-    some maths.
+\end{frame}
+
+\begin{frame}{How it helps us compute determinants (cont.)}
+
+Finally we have 
+
+$$ \text{det}(A) = (-1)^s (\Pi_{i=1}^{n} l_(ii)) (\Pi_{i=1}^{n} u_(ii))$$
+
+Where s is the number of row exchanges in the decomposition.
+
 
 \end{frame}
 
