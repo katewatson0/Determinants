@@ -1,0 +1,12 @@
+\beamer@sectionintoc {1}{Using LU decomposition to compute determinants}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{What is LU decomposition?}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{How it helps us compute determinants}{4}{0}{1}
+\beamer@sectionintoc {2}{Other algorithms for computing determinants}{5}{0}{2}
+\beamer@subsectionintoc {2}{1}{Leibniz formula}{5}{0}{2}
+\beamer@subsectionintoc {2}{2}{Laplace expansion}{6}{0}{2}
+\beamer@subsectionintoc {2}{3}{Gaussian elimination}{9}{0}{2}
+\beamer@subsectionintoc {2}{4}{Bareiss algorithm}{12}{0}{2}
+\beamer@subsectionintoc {2}{5}{Bird's algorithm}{13}{0}{2}
+\beamer@sectionintoc {3}{Epilogue}{16}{0}{3}
+\beamer@subsectionintoc {3}{1}{Summary of determinant algorithms}{16}{0}{3}
+\beamer@subsectionintoc {3}{2}{How fast is Maple's implementation?}{17}{0}{3}
